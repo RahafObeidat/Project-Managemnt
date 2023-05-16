@@ -1,0 +1,272 @@
+﻿@*@model PMISBLayer.Entities.Invoice*@
+@using PMISBLayer.Entities
+@using PMISAppLayer.DTOs
+@model CreateInvoiceDTO
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<script>
+
+    function GetPhasesByProjectId(pid) {
+
+    $.ajax({
+        url: "/ProjectPhase/GetAllProjectPhasesByProjId",
+        ContentType: "application/json",
+        data: { ProjectId: pid.value },
+        success: function(projectphases) {
+               $('#ProjectPhaseId').empty();
+                       $('#ProjectPhaseId').append($('<option>', { value: '0',text:'Please Select From List'}));
+            debugger;
+            console.log;
+            for (var x of projectphases) {
+
+                // $('PhaseId').children('option[value="'+x.phaseId+'"]').attr('disabled', true);
+                //   $('#PhaseId').children('option[value="'+x.phaseId+'"]').attr('disabled', true);
+                $('#ProjectPhaseId').append($('<option>', { value: x.projectPhaseId,text: x.phaseName}));
+
+            }
+
+
+            //alert("something correct ")
+
+        }
+            
+        
+
+        ,
+        error: function() {
+            alert("something wrong ")
+
+        }
+
+
+    });
+}
+
+
+function GetDeliverablesByPhaseId(pid) {
+
+    $.ajax({
+        url: "/PaymentTerm/GetDeliverablesByPhaseId",
+        ContentType: "application/json",
+        data: { ProjectPhaseId: pid.value },
+        success: function(Deliverables) {
+               $('#DeliverableId').empty();
+                 $('#DeliverableId').append($('<option>', { value: '0',text:'Please Select From List'}));
+            debugger;
+            console.log;
+            for (var x of Deliverables) {
+
+                // $('PhaseId').children('option[value="'+x.phaseId+'"]').attr('disabled', true);
+                //   $('#PhaseId').children('option[value="'+x.phaseId+'"]').attr('disabled', true);
+                $('#DeliverableId').append($('<option>', { value: x.deliverableId,text: x.deliverableDescription}));
+
+            }
+
+
+            //alert("something correct ")
+
+        }
+            
+        
+
+        ,
+        error: function() {
+            alert("something wrong ")
+
+        }
+
+
+    });
+}
+
+
+function GetAllPaymentTermsByProjId(pid) {
+    var ctrl = document.getElementById("ProjectId");
+    var did = document.getElementById("DeliverableId");
+    $.ajax({
+        url: "/Invoice/GetAllPaymentTermsByProjId",
+        ContentType: "application/json",
+        data: { ProjectId: ctrl.value,DeliverableId:did.value },
+        success: function(projectterms) {
+               $('#PaymentTermId').empty();
+               // $('#DeliverableId').empty();
+                       $('#PaymentTermId').append($('<option>', { value: '0',text:'Please Select From List'}));
+            debugger;
+            console.log;
+            for (var x of projectterms) {
+
+                // $('PhaseId').children('option[value="'+x.phaseId+'"]').attr('disabled', true);
+                //   $('#PhaseId').children('option[value="'+x.phaseId+'"]').attr('disabled', true);
+                $('#PaymentTermId').append($('<option>', { value: x.paymentTermId,text: x.paymentTermTitle}));
+
+            }
+
+           
+
+
+            //alert("something correct ")
+
+        }
+            
+        
+
+        ,
+        error: function() {
+            alert("something wrong ")
+
+        }
+
+
+    });
+
+
+     GetNotPaidPaymentTerms();
+}
+
+
+
+  function GetNotPaidPaymentTerms() 
+    {   var ctrl = document.getElementById("ProjectId");
+    var did = document.getElementById("DeliverableId");
+
+        $.ajax({
+            url: "/Invoice/GetNotPaidPaymentTerms",
+            ContentType: "application/json",
+            data:   { ProjectId: ctrl.value,DeliverableId:did.value  },
+            success: function(paymentTerms) {
+     
+                debugger;
+                console.log;
+                for (var x of paymentTerms) {
+
+             
+                    $('#PaymentTermId').children('option[value="'+x.paymentTermId+'"]').attr('disabled', true);
+           
+                   
+
+                }
+
+
+                //alert("something correct ")
+
+            }
+
+            ,
+            error: function() { alert("something wrong ") }
+
+
+        });
+    }
+
+</script>
+
+<h1>Create</h1>
+
+<h4>Invoices</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+                  <div class="form-group">
+                <label> Projects </label>
+                <select name="ProjectId" id="ProjectId" onchange="GetPhasesByProjectId(this)" class="form-control">
+                    <option disabled selected value="0">Select a Project</option>
+                    @{
+                        foreach (var pp in ViewBag.Projects)  /*(List<Project>)*/
+                        {
+                                        <option value="@pp.ProjectId"> @pp.ProjectName</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label> Phases </label>
+                <select name="ProjectPhaseId" id="ProjectPhaseId" onchange="GetDeliverablesByPhaseId(this)" class="form-control">
+                    <option disabled selected value="0">Select a Project phase</option>
+                    @* @{
+                    foreach (var pp in (List<ProjectPhase>)ViewBag.ProjectPhases)
+                    {
+                    <option value="@pp.ProjectPhaseId"> @pp.Phase.PhaseName</option>
+                    }
+                    }*@
+                </select>
+            </div>
+
+                        <div class="form-group">
+                <label> Deliverables </label>
+                <select name="DeliverableId"  id="DeliverableId" onchange="GetAllPaymentTermsByProjId(this)" class="form-control">
+                <option disabled selected value="0">Select a Project phase</option>
+
+                   @* @{
+                    foreach (var pp in (List<Deliverable>)ViewBag.Deliverables)
+                    {
+                    <option value="@pp.DeliverableId"> @pp.DeliverableDescription</option>
+                    }
+                    }*@
+                </select>
+            </div>
+
+          @*  <div class="form-group">*@
+
+
+    @*<label> Project Name </label>*@
+  @*  <select name="ProjectId" Id="ProjectId" onchange="GetAllPaymentTermsByProjId(this)" class="form-control">
+        <option value="none" selected disabled hidden> Select an option</option>
+        @{
+            foreach (var p in (List<Project>)@ViewBag.projects)
+            {
+                        <option value="@p.ProjectId">@p.ProjectName</option>
+
+            }
+        }
+    </select>*@
+
+   
+@*  
+</div>*@
+
+ <div class="form-group">
+                <label> Payment Terms </label>
+                <select name="PaymentTermId" multiple id="PaymentTermId" class="form-control">
+                <option disabled selected value="0">Select a Payment Terms </option>
+
+                   @* @{
+                    foreach (var pp in (List<Deliverable>)ViewBag.Deliverables)
+                    {
+                    <option value="@pp.DeliverableId"> @pp.DeliverableDescription</option>
+                    }
+                    }*@
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="InvoiceTitle" class="control-label"></label>
+                <input asp-for="InvoiceTitle" class="form-control" />
+                <span asp-validation-for="InvoiceTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InvoiceDate" class="control-label"></label>
+                <input asp-for="InvoiceDate" class="form-control" />
+                <span asp-validation-for="InvoiceDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">0
+                <input type="submit" value="Create" class="btn btn-info" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

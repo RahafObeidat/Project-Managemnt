@@ -1,0 +1,155 @@
+﻿@model IEnumerable<PMISBLayer.Entities.Project>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a class="btn btn-info" asp-action="Create">Create New</a>
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Project Name
+               @* @Html.DisplayNameFor(model => model.Project)*@
+            </th>
+            <th>
+                Phases
+                @*@Html.DisplayNameFor(model => model.Phase)*@
+            </th>
+            <th>
+              
+               @* @Html.DisplayNameFor(model => model.StartTime)*@
+            </th>
+            <th>
+               
+                @*@Html.DisplayNameFor(model => model.dateTime)*@
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model == null)
+        {
+            <p>No Data Found</p>
+        }
+
+        @foreach (var item in Model)
+        {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProjectName)
+
+        </td>
+       
+
+        <td>
+            <table class="table">
+                <tbody>
+                    @foreach (var item1 in item.ProjectPhases)
+                    {
+                    <tr>
+                        <td>
+                            @item1.Phase.PhaseName
+                        </td>
+
+                        <td>
+                            @item1.StartTime
+                            @*@Html.DisplayFor(modelItem => item.StartTime)*@
+                        </td>
+                        <td>
+                            @item1.dateTime
+                            @*@Html.DisplayFor(modelItem => item1.dateTime)*@
+                        </td>
+
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item1.ProjectPhaseId">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item1.ProjectPhaseId">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item1.ProjectPhaseId">Delete</a>
+                        </td>
+
+
+                    </tr>
+
+                    }
+                
+</tbody>
+
+            </table>
+
+
+
+
+
+
+    </tr>
+
+        }
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+@*@using PMISBLayer.Entities.ProjectPhase
+
+
+    <a class="btn btn-primary" href="/ProjectPhases/NewProjectPhase">Creat new projectPhase</a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(ProjectPhases => ProjectPhases.StartTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Phase)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Project)
+                </th>
+                <th></th>
+            </tr>
+                <th> Project Name</th>
+                <th> Project phase </th>
+                <th> Start Date</th>
+                <th> End Date</th>
+
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var p in (List<Project>)ViewBag.projects)
+            {
+            <tr>
+                <td>@p.ProjectId</td>
+                <td>@p.ProjectPhaseId</td>
+                <td>@p.StartDate</td>
+                <td>@p.EndDate</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@p.ProjectPhaseId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@p.ProjectPhaseId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@p.ProjectPhaseId">Delete</a>
+                </td>
+            </tr>
+            }
+
+        </tbody>
+
+    </table>*@
+
+

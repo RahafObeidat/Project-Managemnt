@@ -1,0 +1,57 @@
+﻿@using PMISBLayer.Entities
+@model IEnumerable<PMISBLayer.Entities.Project>
+
+
+<a class="btn btn-info" href="/Project/CreateProject">Creat new project</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th> Project Name</th>
+            <th> Project Amount </th>
+            <th> Project Contract</th>
+
+
+        </tr>
+
+    </thead>
+    <tbody>
+        @if (Model == null)
+        {
+            <p>No Data Found</p>
+        }
+        else
+        {
+            @foreach (var p in Model)
+            {
+    <tr>
+        <td>@p.ProjectName</td>
+        <td>@p.ContractAmount</td>
+        <td><a class="btn btn-info" target="_blank" href="/Project/ViewContract?ProjectId=@p.ProjectId"></a>@p.ContractFileName</td>
+        <td><a class="btn btn-info" href="/ProjectPhase/Index?ProjectId=@p.ProjectId">Phases</a></td>
+        <td><a class="btn btn-info" href="/Deliverable/Index?ProjectId=@p.ProjectId">Deliverables</a></td>
+        <td>
+            <a asp-action="Edit" asp-route-id="@p.ProjectId">Edit</a> |
+            <a asp-action="Details" asp-route-id="@p.ProjectId">Details</a> |
+            <a asp-action="Delete" asp-route-id="@p.ProjectId">Delete</a>
+        </td>
+    </tr>
+            }
+
+        }
+
+    </tbody>
+
+</table>
+
+
+
+
+
+
+
+
+
+
+
+

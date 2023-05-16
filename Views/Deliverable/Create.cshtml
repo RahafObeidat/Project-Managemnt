@@ -1,0 +1,138 @@
+﻿@*@model PMISBLayer.Entities.Deliverable*@
+@using PMISBLayer.Entities
+@using PMISAppLayer.DTOs
+@model CreateDeliverableDTO
+<script>
+
+function GetPhasesByProjectId(pid) {
+
+    $.ajax({
+        url: "/ProjectPhase/GetAllProjectPhasesByProjId",
+        ContentType: "application/json",
+        data: { ProjectId: pid.value },
+        success: function(projectphases) {
+               $('#ProjectPhaseId').empty();
+                       $('#ProjectPhaseId').append($('<option>', { value: '0',text:'Please Select From List'}));
+            debugger;
+            console.log;
+            for (var x of projectphases) {
+                $('#ProjectPhaseId').append($('<option>', { value: x.projectPhaseId,text: x.phaseName}));
+
+            }
+
+
+        }
+            
+        
+
+        ,
+        error: function() {
+            alert("something wrong ")
+
+        }
+
+
+    });
+}
+
+</script>
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Deliverables</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label> Projects </label>
+                <select name="ProjectId" id="ProjectId" onchange="GetPhasesByProjectId(this)" class="form-control">
+                    <option disabled selected value="0">Select a Project</option>
+                    @{
+                        foreach (var pp in ViewBag.Projects)  /*(List<Project>)*/
+                        {
+                                    <option value="@pp.ProjectId"> @pp.ProjectName</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label> Phases </label>
+                <select name="ProjectPhaseId" id="ProjectPhaseId" class="form-control">
+                    <option disabled selected value="0">Select a Project phase</option>
+                    @* @{
+                    foreach (var pp in (List<ProjectPhase>)ViewBag.ProjectPhases)
+                    {
+                    <option value="@pp.ProjectPhaseId"> @pp.Phase.PhaseName</option>
+                    }
+                    }*@
+                </select>
+            </div>
+
+           @* <div class="form-group">
+                <label> Deliverables </label>
+                <select name="DeliverableId" class="form-control">
+                    @{
+                    foreach (var pp in (List<Deliverable>)ViewBag.Deliverables)
+                    {
+                    <option value="@pp.DeliverableId"> @pp.DeliverableDescription</option>
+                    }
+                    }
+                </select>
+            </div>
+*@
+            <div class="form-group">
+
+
+                <label asp-for="DeliverableDescription" class="control-label">Deliverable Description</label>
+                <input asp-for="DeliverableDescription" class="form-control" />
+                <span asp-validation-for="DeliverableDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label">Start Date</label>
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label">End Date</label>
+                <input asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+            <label asp-for="ProjectPhaseId" class="control-label">Project Phase</label>
+            <select asp-for="ProjectPhaseId" class="form-control" asp-items="ViewBag.ProjectPhaseId"></select>
+            </div>*@
+          @*  <div class="form-group">
+                <label> Phase </label>
+                <select name="PhaseId" class="form-control">
+                    @{
+                        foreach (var pp in (List<Phase>)ViewBag.Phases)
+                        {
+                                    <option value="@pp.PhaseId"> @pp.PhaseName</option>
+                        }
+                    }
+                </select>
+            </div>*@
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-info" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

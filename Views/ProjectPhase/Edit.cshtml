@@ -1,0 +1,73 @@
+﻿@model PMISBLayer.Entities.ProjectPhase
+@using PMISBLayer.Entities
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>ProjectPhases</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @*<input type="hidden" asp-for="ProjectId" />*@
+            <input type="hidden" asp-for="ProjectPhaseId" />
+            <input type="hidden" asp-for="PhaseId" />
+            <input type="hidden" asp-for="Phase.PhaseName" />
+
+
+            @*<div class="form-group">
+                    <label>Phase Id</label>
+                    <select asp-for="PhaseId" class="form-control" asp-items="ViewBag.PhaseId"></select>
+                    <span asp-validation-for="PhaseId" class="text-danger"></span>
+                </div>*@
+            <div class="form-group">
+                <label asp-for="Phase.PhaseName" class="control-label">Phase Name</label>
+                <Select asp-for="Phase.PhaseName" class="form-control" ></Select>
+                <span asp-validation-for="Phase.PhaseName" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label>Select Project Phase</label>
+                <select name="PhaseId" class="form-control">
+                    @{
+                        foreach (var pp in (List<Phase>)ViewBag.Phases)
+                        {
+                            <option value="@pp.PhaseId"> @pp.PhaseName</option>
+                        }
+                    }
+                </select>
+            </div>*@
+
+            @*<div class="form-group">
+                    <label asp-for="Phase" class="control-label"> Phase</label>
+                    <select asp-for="Phase" class="form-control" asp-items="ViewBag.Phase"></select>
+                    <span asp-validation-for="Phase" class="text-danger"></span>
+                </div>*@
+            <div class="form-group">
+                <label asp-for="Project" class="control-label">Start Date</label>
+                <input asp-for="StartTime" class="form-control" />
+                <span asp-validation-for="StartTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="dateTime" class="control-label">End Date</label>
+                <input asp-for="dateTime" class="form-control" />
+                <span asp-validation-for="dateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

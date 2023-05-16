@@ -1,0 +1,166 @@
+﻿@model PMISBLayer.Entities.PaymentTerm
+
+
+@{
+    ViewData["Title"] = "Create";
+}
+<script>
+
+function GetPhasesByProjectId(pid) {
+
+    $.ajax({
+        url: "/ProjectPhase/GetAllProjectPhasesByProjId",
+        ContentType: "application/json",
+        data: { ProjectId: pid.value },
+        success: function(projectphases) {
+               $('#ProjectPhaseId').empty();
+                       $('#ProjectPhaseId').append($('<option>', { value: '0',text:'Please Select From List'}));
+            debugger;
+            console.log;
+            for (var x of projectphases) {
+
+                // $('PhaseId').children('option[value="'+x.phaseId+'"]').attr('disabled', true);
+                //   $('#PhaseId').children('option[value="'+x.phaseId+'"]').attr('disabled', true);
+                $('#ProjectPhaseId').append($('<option>', { value: x.projectPhaseId,text: x.phaseName}));
+
+            }
+
+
+            //alert("something correct ")
+
+        }
+            
+        
+
+        ,
+        error: function() {
+            alert("something wrong ")
+
+        }
+
+
+    });
+}
+
+
+function GetDeliverablesByPhaseId(pid) {
+
+    $.ajax({
+        url: "/PaymentTerm/GetDeliverablesByPhaseId",
+        ContentType: "application/json",
+        data: { ProjectPhaseId: pid.value },
+        success: function(Deliverables) {
+               $('#DeliverableId').empty();
+                 $('#DeliverableId').append($('<option>', { value: '0',text:'Please Select From List'}));
+            debugger;
+            console.log;
+            for (var x of Deliverables) {
+
+                // $('PhaseId').children('option[value="'+x.phaseId+'"]').attr('disabled', true);
+                //   $('#PhaseId').children('option[value="'+x.phaseId+'"]').attr('disabled', true);
+                $('#DeliverableId').append($('<option>', { value: x.deliverableId,text: x.deliverableDescription}));
+
+            }
+
+
+            //alert("something correct ")
+
+        }
+            
+        
+
+        ,
+        error: function() {
+            alert("something wrong ")
+
+        }
+
+
+    });
+}
+</script>
+
+<h1>Create</h1>
+
+<h4>PaymentTerms</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            
+                  <div class="form-group">
+                <label> Projects </label>
+                <select name="ProjectId" id="ProjectId" onchange="GetPhasesByProjectId(this)" class="form-control">
+                    <option disabled selected value="0">Select a Project</option>
+                    @{
+                        foreach (var pp in ViewBag.Projects)  /*(List<Project>)*/
+                        {
+                                    <option value="@pp.ProjectId"> @pp.ProjectName</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label> Phases </label>
+                <select name="ProjectPhaseId" id="ProjectPhaseId" onchange="GetDeliverablesByPhaseId(this)" class="form-control">
+                    <option disabled selected value="0">Select a Project phase</option>
+                    @* @{
+                    foreach (var pp in (List<ProjectPhase>)ViewBag.ProjectPhases)
+                    {
+                    <option value="@pp.ProjectPhaseId"> @pp.Phase.PhaseName</option>
+                    }
+                    }*@
+                </select>
+            </div>
+
+                        <div class="form-group">
+                <label> Deliverables </label>
+                <select name="DeliverableId"  id="DeliverableId" class="form-control">
+                <option disabled selected value="0">Select a Project phase</option>
+
+                   @* @{
+                    foreach (var pp in (List<Deliverable>)ViewBag.Deliverables)
+                    {
+                    <option value="@pp.DeliverableId"> @pp.DeliverableDescription</option>
+                    }
+                    }*@
+                </select>
+            </div>
+
+            @*
+                   <div class="form-group">
+                <label asp-for="DeliverableId" class="control-label"></label>
+                <select asp-for="DeliverableId" class="form-control" asp-items="ViewBag.DeliverableId"></select>
+            </div>*@
+            
+            
+            
+            <div class="form-group">
+                <label asp-for="PaymentTermTitle" class="control-label"></label>
+                <input asp-for="PaymentTermTitle" class="form-control" />
+                <span asp-validation-for="PaymentTermTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PaymentTermAmount" class="control-label"></label>
+                <input asp-for="PaymentTermAmount" class="form-control" />
+                <span asp-validation-for="PaymentTermAmount" class="text-danger"></span>
+            </div>
+
+     
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-info" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

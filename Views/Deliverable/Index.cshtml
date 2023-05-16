@@ -1,0 +1,85 @@
+﻿@model IEnumerable<PMISBLayer.Entities.ProjectPhase>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<P>
+    <a class="btn btn-info" asp-action="Create">Create New</a>
+</P>
+
+<table class="table">
+    
+
+    <thead>
+        <tr>
+            <th>
+                Project Phase Id
+                @*@Html.DisplayNameFor(model => model.DeliverableDescription)*@
+            </th>
+            <th>
+                Project Phase Name
+                @*  @Html.DisplayNameFor(model => model.StartDate)*@
+            </th>
+            <th>
+                Deliverables
+                @*@Html.DisplayNameFor(model => model.EndDate)*@
+            </th>
+            <th>
+
+                @* @Html.DisplayNameFor(model => model.ProjectPhase)*@
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*<td>
+                        <a asp-action="Create" asp-route-id="@item.ProjectPhaseId">Create</a>
+                    </td>*@
+                <td>
+
+                    @Html.DisplayFor(modelItem => item.ProjectPhaseId)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phase.PhaseName)
+                </td>
+
+                <td>
+                    <table>
+                        <tbody>
+                            @foreach (var item1 in item.Deliverables)
+                            {
+                                <tr>
+                                    <td>
+                                        @item1.DeliverableDescription
+                                    </td>
+
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item1.StartDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item1.EndDate)
+                                    </td>
+
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item1.DeliverableId">Edit</a> |
+                                        <a asp-action="Details" asp-route-id="@item1.DeliverableId">Details</a> |
+                                        <a asp-action="Delete" asp-route-id="@item1.DeliverableId">Delete</a>
+                                    </td>
+                                </tr>
+
+                            }
+                        </tbody>
+
+                    </table>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

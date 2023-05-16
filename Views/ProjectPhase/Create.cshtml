@@ -1,0 +1,81 @@
+﻿@*@model PMISBLayer.Entities.ProjectPhase*@
+@using PMISBLayer.Entities
+@using PMISAppLayer.DTOs
+@model CreateProjectPhaseDTO
+
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>ProjectPhases</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data" method="post">
+            @*<div class="form-group">
+                <label asp-for="ProjectName" class="control-label"></label>
+                <input asp-for="ProjectName" class="form-control" />
+                <span asp-validation-for="ProjectName" class="text-danger"></span>
+            </div>*@
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label> Select Project Name </label>
+                <select name="ProjectId" Id="ProjectId" class="form-control">
+                    <option value="none" selected disabled hidden> Select an option</option>
+                    @{
+                        foreach (var p in (List<Project>)@ViewBag.projects)
+                        {
+                            <option value="@p.ProjectId">@p.ProjectName</option>
+
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Select Project Phase</label>
+                <select name="PhaseId" class="form-control">
+                    @{
+                        foreach (var pp in (List<Phase>)ViewBag.Phases)
+                        {
+                            <option value="@pp.PhaseId"> @pp.PhaseName</option>
+                        }
+                    }
+                </select>
+                </div>
+              
+                    
+            @*<div class="form-group">
+            <label asp-for="PhaseId" class="control-label">Choose Project Phase</label>
+            <select asp-for="PhaseId" class="form-control" asp-items="ViewBag.PhaseId">
+                <option value="none" selected disabled hidden> Select an option</option>
+            </select>
+                </div>*@
+                <!--</div>-->
+                <div class="form-group">
+                    <label asp-for="StartDate" class="control-label">Start Date</label>
+                    <input asp-for="StartDate" class="form-control" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="EndDate" class="control-label">End Date</label>
+                    <input asp-for="EndDate" class="form-control" />
+                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+</form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

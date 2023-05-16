@@ -1,0 +1,87 @@
+﻿@using PMISAppLayer.DTOs
+@using PMISBLayer.Entities
+@model InsertProjectDTO
+@*
+    <script>
+        $(function){
+
+            $("#StartDate").datepicker();
+            $("#EndDate").datepicker();
+        });
+
+    </script>*@
+
+
+
+<h1>Create</h1>
+
+<h4>Projects</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="InsertProject" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ProjectName" class="control-label"></label>
+                <input asp-for="ProjectName" class="form-control" />
+                <span asp-validation-for="ProjectName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContractAmount" class="control-label"></label>
+                <input asp-for="ContractAmount" class="form-control" />
+                <span asp-validation-for="ContractAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContractFile" class="control-label"></label>
+                <input asp-for="ContractFile" type="file" class="form-control" />
+                <span asp-validation-for="ContractFile" class="text-danger"></span>
+            </div>
+
+
+
+            <div class="form-group">
+                <label>Select Project Type</label>
+                <select name="ProjectTypeId" class="form-control">
+                    @{
+                        foreach (var pt in (List<ProjectType>)ViewBag.ProjectTypes)
+                        {
+                            <option value="@pt.ProjectTypeId"> @pt.ProjectTypeName  </option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Select Project Type</label>
+                <select name="ProjectStatusId" class="form-control">
+                    @{
+                        foreach (var ps in (List<ProjectStatus>)ViewBag.ProjectStatuses)
+                        {
+                            <option value="@ps.ProjectStatusId"> @ps.Status </option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+

@@ -1,0 +1,158 @@
+﻿@model IEnumerable<PMISBLayer.Entities.Invoice>
+@using PMISBLayer.Entities
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<script>
+function getProjectInvoices(pid) {
+    $.ajax({
+
+
+        url: "/Invoice/GetInvoiceByProjectId" ,
+        ContentType: "application/json",
+        data: { Id: pid.value },
+        success: function(invoices) {
+
+            debugger;
+            console.log;
+
+
+
+            $('#InvoiceTable').empty();
+            for (var x of invoices) {
+
+                var tr = document.createElement("tr");
+
+                var Idtd = document.createElement("td");
+                Idtd.innerHTML = x.invoiceId;
+
+                var InvoiceTitletd = document.createElement("td");
+                InvoiceTitletd.innerHTML = x.invoiceTitle ;
+
+                var InvoiceDatetd = document.createElement("td");
+                InvoiceDatetd.innerHTML = x.invoiceDate;
+
+
+
+
+              
+                var anchortd = document.createElement("td");
+                anchortd.innerHTML = "<a href='/Invoice/PrintInvoice?InvoiceId=" + x.invoiceId + "&ProjectId="+x.projectId+"'>Print Invoice</a>";
+
+                tr.append(Idtd);
+                tr.append(InvoiceTitletd);
+
+                tr.append(InvoiceDatetd);
+                tr.append(anchortd);
+
+
+                $('#InvoiceTable').append(tr);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                //$("#yourDropDown").append(x.phaseName);
+
+
+                //// $('PhaseId').children('option[value="'+x.phaseId+'"]').attr('disabled', true);
+                //$('#PhaseId').children('option[value="' + x.phaseId + '"]').attr('disabled', true);
+                //var d = new Date(x.endDate);
+                //// d = x.endDate;
+                //d.setDate(d.getDate() + 1);
+                //console.log(d.toDateString("ar-JO"));
+                //var y = d.toLocaleString("default", { year: "numeric" });
+                //var m = d.toLocaleString("default", { month: "2-digit" });
+                //var day = d.toLocaleString("default", { day: "2-digit" });
+                //var lastDate = day + "-" + m + "-" + y
+                //$("#StartDate").attr("value", lastDate);
+                //// $("#StartDate").attr("value", d.toLocaleString("default", {month:"2-digit",day:"2-digit",year:"numeric"}) );
+                ////if(x.phaseId == )
+                ////$("#PhaseId").attr("disabled", true);
+
+            }
+
+
+        },
+        error: function() {
+            alert("something wrong ")
+        }
+    });
+}
+</script>
+
+<p>
+    <a class="btn btn-info" asp-action="Create">Create New</a>
+</p>
+<div class="form-group">
+    <label> Project Name </label>
+    <select name="ProjectId" Id="ProjectId" onchange="getProjectInvoices(this)" class="form-control">
+        <option value="none" selected disabled hidden> Select an option</option>
+        @{
+            foreach (var p in (List<Project>)@ViewBag.projects)
+            {
+                        <option value="@p.ProjectId">@p.ProjectName</option>
+
+            }
+        }
+    </select>
+
+   
+  
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th> Invoice Id </th>
+            <th>
+                Invoice Title
+              @*  @Html.DisplayNameFor(model => model.InvoiceTitle)*@
+            </th>
+            <th>
+                Invoice Date
+                @*@Html.DisplayNameFor(model => model.InvoiceDate)*@
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody id="InvoiceTable">
+    </tbody>
+
+    @*<tbody>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+    <td>
+    @Html.DisplayFor(modelItem => item.ProjectId)
+    </td>
+    <td>
+    @Html.DisplayFor(modelItem => item.InvoiceTitle)
+    </td>
+    <td>
+    @Html.DisplayFor(modelItem => item.InvoiceDate)
+    </td>
+    <td>
+    <a asp-action="Edit" asp-route-id="@item.InvoiceId">Edit</a> |
+    <a asp-action="Details" asp-route-id="@item.InvoiceId">Details</a> |
+    <a asp-action="Delete" asp-route-id="@item.InvoiceId">Delete</a>
+    </td>
+    </tr>
+    }
+    </tbody>*@
+</table>

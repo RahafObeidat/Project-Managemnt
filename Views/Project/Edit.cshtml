@@ -1,0 +1,83 @@
+﻿@model PMISBLayer.Entities.Project
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1> 
+
+<h4>Projects</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ProjectId" />
+            <input type="hidden" asp-for="ProjectTypeId" />
+            <input type="hidden" asp-for="ProjectStatusId" />
+            <div class="form-group">
+                <label asp-for="ProjectName" class="control-label">Project Name</label>
+                <input asp-for="ProjectName" class="form-control" />
+                <span asp-validation-for="ProjectName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label">Start Date</label>
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label">End Date</label>
+                <input asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContractAmount" class="control-label">Contract Amount</label>
+                <input asp-for="ContractAmount" class="form-control" />
+                <span asp-validation-for="ContractAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContractFile" class="control-label">Contract File</label>
+                <input asp-for="ContractFile" type="file" class="form-control" />
+                <span asp-validation-for="ContractFile" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="ProjectType" class="control-label">Project Type</label>
+                <select asp-for="ProjectType" class="form-control" asp-items="ViewBag.ProjectType"></select>
+                <span asp-validation-for="ProjectType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProjectStatus" class="control-label">Project Status</label>
+                <select asp-for="ProjectStatus" class="form-control" asp-items="ViewBag.ProjectStatus"></select>
+                <span asp-validation-for="ProjectStatus" class="text-danger"></span>
+            </div>*@
+
+            @*<div class="form-group">
+            <label asp-for="ContractFileName" class="control-label"></label>
+            <input asp-for="ContractFileName" class="form-control" />
+            <span asp-validation-for="ContractFileName" class="text-danger"></span>
+        </div>*@
+            @*<div class="form-group">
+            <label asp-for="ContractFileType" class="control-label"></label>
+            <input asp-for="ContractFileType" class="form-control" />
+            <span asp-validation-for="ContractFileType" class="text-danger"></span>
+        </div>*@
+            @*<div class="form-group">
+            <label asp-for="ProjectManagerId" class="control-label"></label>
+            <select asp-for="ProjectManagerId" class="form-control" asp-items="ViewBag.ProjectManagerId"></select>
+            <span asp-validation-for="ProjectManagerId" class="text-danger"></span>
+        </div>*@
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
