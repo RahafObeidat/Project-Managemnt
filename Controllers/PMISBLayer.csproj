@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20221212233326_InitializeDB.cs" />
+    <Compile Remove="Migrations\20221212233326_InitializeDB.Designer.cs" />
+    <Compile Remove="Migrations\20230201193457_abcd.cs" />
+    <Compile Remove="Migrations\20230201193457_abcd.Designer.cs" />
+    <Compile Remove="Migrations\20230201201407_rtyt.cs" />
+    <Compile Remove="Migrations\20230201201407_rtyt.Designer.cs" />
+    <Compile Remove="Migrations\20230203085825_xdsz.cs" />
+    <Compile Remove="Migrations\20230203085825_xdsz.Designer.cs" />
+    <Compile Remove="Migrations\20230203131242_hjhj.cs" />
+    <Compile Remove="Migrations\20230203131242_hjhj.Designer.cs" />
+    <Compile Remove="Migrations\20230203131932_hjhj7777777777.cs" />
+    <Compile Remove="Migrations\20230203131932_hjhj7777777777.Designer.cs" />
+    <Compile Remove="Migrations\20230203132658_hjhj7777777777iiiiiiiiiiii.cs" />
+    <Compile Remove="Migrations\20230203132658_hjhj7777777777iiiiiiiiiiii.Designer.cs" />
+    <Compile Remove="Migrations\20230203133128_hop.cs" />
+    <Compile Remove="Migrations\20230203133128_hop.Designer.cs" />
+    <Compile Remove="Migrations\20230203133250_hop1.cs" />
+    <Compile Remove="Migrations\20230203133250_hop1.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\Migrations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.29" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.29" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.29" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.29" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.29">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>
